@@ -43,6 +43,15 @@ body{
    border: 1px solid red;  
    top: 440px;
 }
+.arrow{
+    background-image: url(img/arrow.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    border: 10px solid green;;
+}
 .mob{
     top: 440px;
     position: absolute;
