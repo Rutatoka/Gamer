@@ -2,9 +2,10 @@
 let character=document.querySelector(".character");
 
 let map=document.querySelector(".map");
-// let cam=document.querySelector(".camera");
-let x=0;
+ let mob=document.querySelector(".mob");
+let x=100;
 let y=0;
+let dx = 10;
 let held_directions=[];
 let speed=3.8;
 
@@ -15,9 +16,7 @@ const placeCharacter=()=>{
     const held_direction=held_directions[0];
     if(held_direction){
         if(held_direction===directions.right){x+=speed; walk_right();
-            setInterval(() => {
-                mob_walk_left();
-            }, 710);
+           
         }
         if(held_direction===directions.left){x-=speed; walk_left();}
 
@@ -28,7 +27,7 @@ const placeCharacter=()=>{
     character.setAttribute("walking",held_direction?"true":"false");
     
      // mob.setAttribute("walking",held_direction?"true":"false");
-    if(x>650||x<-2){ 
+    if(x>630||x<-2){ 
         character.style.transform=false
 
        }
@@ -92,14 +91,43 @@ function walk_left() {
 
             context.clearRect(0, 0, width, height);
             drawImage(hero_left, 0, 452);
-            drawImage(mob_right,110, 452);
+            // drawImage(mob_right,110, 452);
            
 }
+// setInterval(function() {
+
+//         mob.style.left = x - 5 + 'px';
+//         dx += 1;
+    
+//     }, 1000 / 60)
+//     window.onmousemove = function(event) {
+//             x = event.pageX;
+//             y = event.pageY;
+//         };
 function walk_right() {
         context.clearRect(0, 0, width, height);
         drawImage(hero_right, 0, 452);
-        drawImage(mob_left, 110, 447);
+//         setInterval(() => {
+//     if (x >  100) {
+//         context.clearRect(50, 0, width, height);
+//         drawImage(mob_left, 900, 447)
+//     }
+//   }, 1300); 
+       
 }
+setInterval(function() {
+    context.clearRect(70, 0, width, height);
+    drawImage(mob_left, 80, 447)
+    x-=speed;
+
+
+}, 200)
+// setInterval(() => {
+//     if (x >=  100) {
+//         context.clearRect(0, 0, 110, 447);
+//         drawImage(mob_left, 110, 447)
+//     }
+//   }, 300);
 // function mob_walk_left() { 
 //      context.clearRect(0, 0, width, height);
   
@@ -126,7 +154,7 @@ function walk_right() {
 //     drawImage(mob_left, 100, 120);
 // }
 let context = document.querySelector(".character").getContext("2d");
-
+let mob_cxt = document.querySelector(".mob").getContext("2d");
 let width = 1100,
     height = 1000;
    
@@ -144,6 +172,7 @@ function drawImage(img, c, v) {
     if (img.num >= img.count) img.num = 1
     else img.num += 1;
     context.drawImage(img.dom, img.width * (img.num - 1), 0, img.width/1.4, img.height/1.3, c-10, v,64, 360);
+    // mob_cxt.drawImage(img.dom, img.width * (img.num - 1), 0, img.width/1.4, img.height/1.3, c-10, v,64, 360);
    }
 
 function loadImage(path, width, height, count) {
