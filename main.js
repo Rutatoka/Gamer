@@ -1,10 +1,11 @@
 "use strict"
 let character=document.querySelector(".character");
 let map=document.querySelector(".map");
+// let cam=document.querySelector(".camera");
 let x=0;
 let y=0;
 let held_directions=[];
-let speed=0.8;
+let speed=3.8;
 
 const placeCharacter=()=>{
     let pixelSize=parseInt(
@@ -12,22 +13,38 @@ const placeCharacter=()=>{
     );
     const held_direction=held_directions[0];
     if(held_direction){
-        if(held_direction===directions.right){x+=speed; walk_right();}
+        if(held_direction===directions.right){x+=speed; walk_right();
+            
+        }
         if(held_direction===directions.left){x-=speed; walk_left();}
 
         character.setAttribute("facing",held_direction);
 
     }
     
-     if(character.walking===false){ walk_stoper();}
+    //  if(character.walking===false){ walk_stoper();}
     character.setAttribute("walking",held_direction?"true":"false");
    
-    character.style.transform=`translate3d(${x*pixelSize}px,${y*pixelSize}px,0)`;
-
-
-    let camera_left=pixelSize*1;
-     
+    if(x>650||x<-2){ 
+        character.style.transform=false
+       }
+       else{  
+           character.style.transform=`translate3d(${x*pixelSize}px,${y*pixelSize}px,0)`;
+      
+       }
+   if(x>300||x<-2){
+    map.style.transform=false
+   }
+   else{  
+         let camera_left=pixelSize*1;
     map.style.transform=`translate3d(${-x*pixelSize+camera_left}px,${-y*pixelSize}px,0)`;
+   }
+   
+
+
+
+     
+ 
 
 }
 
@@ -58,6 +75,7 @@ document.addEventListener("keydown",(e)=>{
     } 
  
 })
+
 document.addEventListener("keyup",(e)=>{
     let dir=keys[e.which];
     let index=held_directions.indexOf(dir);
@@ -69,13 +87,13 @@ document.addEventListener("keyup",(e)=>{
 function walk_left() {
 
             context.clearRect(0, 0, width, height);
-            drawImage(hero_left, 0, 560);
+            drawImage(hero_left, 0, 420);
        
            
 }
 function walk_right() {
         context.clearRect(0, 0, width, height);
-        drawImage(hero_right, 0, 560);
+        drawImage(hero_right, 0, 420);
         
 }
 function walk_stoper() {
@@ -87,10 +105,10 @@ function walk_stoper() {
 
 let context = document.querySelector(".character").getContext("2d");
 let width = 100,
-    height = 700;
+    height = 1000;
    
 let hero_left = loadImage("img/hero_walk.png", 64, 160, 7);
-let hero_stop = loadImage("img/hero_stop.png", 65, 160, 1);
+let hero_stop = loadImage("img/hero_stop.png", 65, 260, 1);
 let hero_right = loadImage("img/hero_walk_right.png", 64, 160, 7);
 // let girl2 = loadImage("last-guardian-sprites/amg3_lf2.gif", 32, 32, 2);
 
@@ -99,7 +117,7 @@ let hero_right = loadImage("img/hero_walk_right.png", 64, 160, 7);
 function drawImage(img, c, v) {
     if (img.num >= img.count) img.num = 1
     else img.num += 1;
-    context.drawImage(img.dom, img.width * (img.num - 1), 0, img.width/1.2, img.height/2, c-10, v,64, 160);
+    context.drawImage(img.dom, img.width * (img.num - 1), 0, img.width/1.4, img.height/1.3, c-10, v,64, 360);
 }
 
 function loadImage(path, width, height, count) {
