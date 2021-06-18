@@ -40,8 +40,7 @@ body{
    
     position: absolute;
     overflow: hidden;
-   border: 1px solid red;  
-   top: 440px;
+    top: 440px;
 }
 .arrow{
     background-image: url(img/arrow.png);
@@ -51,14 +50,31 @@ body{
     display: block;
     height: 50px;
     position: absolute;
-    border: 10px solid green;;
+    border: 10px solid greenyellow;;
 }
-.fly{
-    animation: star 5s linear infinite;
+#health{
+background-color: green;
+color: black;
+font-weight: bold;
+position: absolute;
+height: 10px;
+width: 100px;
+display: block;
+top:420px;
+text-align: center;
 }
-@keyframes star{
+#stamina{
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    height: 10px;
+    width: 100px;
+    display: block;
+    top:440px;
+    text-align: center;
+    }
 
-}
 .mob{
     top: 440px;
     position: absolute;
