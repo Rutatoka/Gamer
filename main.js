@@ -2,6 +2,7 @@
 let character=document.querySelector(".character");
 let map=document.querySelector(".map");
  let mob=document.querySelector(".mob");
+ let arrow_img=document.querySelector(".arrow");
 let x=40;
 let y=0;
 let c=0;
@@ -17,7 +18,8 @@ const placeCharacter=()=>{
     if(held_direction){
         if(held_direction===directions.right){x+=speed; walk_right();}
         if(held_direction===directions.left){x-=speed;walk_left();}
-
+        if(held_direction===directions.atack1){atack_left()}
+        if(held_direction===directions.atack2){atack_right()}
         character.setAttribute("facing",held_direction);
     
     }
@@ -50,24 +52,20 @@ step();
 
 const directions={
     left:'left',
-    right:'right'
+    right:'right',
+    atack1:'atack1',
+    atack2:'atack2'
 }
 const keys={
     37:directions.left,
+    69:directions.atack2,
+    81:directions.atack1,
     39:directions.right
 }
 
 document.addEventListener("keydown",(e)=>{
     let dir=keys[e.which];
-    if(e.ctrlKey){
-        atack_left();
-    }if(e.altKey){
-        do{
-            atack_right();
-        }
-        while(img.num=13)
-        
-    }
+
     if(dir&&held_directions.indexOf(dir)===-1){
         held_directions.unshift(dir)
         
@@ -94,9 +92,17 @@ function walk_right() {
 } 
 
  function atack_right() { 
- context.clearRect(0, 0, width, height);
-drawImage(hero_atack_right, 0, 30);
+     for(let i=0;i<14;i++){
 
+    
+     setTimeout(() => {
+          context.clearRect(0, 0, width, height);
+drawImage(hero_atack_right, 0, 30); 
+if(i=6){
+arrow();
+}
+     }, 500);
+ }
 }
 function atack_left() { 
     context.clearRect(0, 0, width, height);
@@ -104,7 +110,14 @@ function atack_left() {
    
    }
 
-
+   function arrow() { 
+       if(arrow_img.classList!='fly'){
+        arrow_img.classList.add('fly');
+       }
+   setTimeout(function(){
+    arrow_img.classList.remove('fly');
+   },200);
+   }
 let context = document.querySelector(".character").getContext("2d");
 
 let width = 100,
