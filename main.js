@@ -1,6 +1,8 @@
 "use strict"
 let character=document.querySelector(".character");
 let map=document.querySelector(".map");
+let health=document.querySelector("#health");
+let stamina=document.querySelector("#stamina");
  let mob=document.querySelector(".mob");
  let arrow_img=document.querySelector(".arrow");
 let x=40;
@@ -9,6 +11,43 @@ let c=0;
 let v=0;
 let held_directions=[];
 let speed=7.8;
+let Rect=function(l,o,k,j){
+    this.l=l;
+    this.o=o;
+    this.k=k;
+    this.j=j;
+
+    this.dl=0;
+    this.do=0;
+
+    this.max=10;
+    this.dd=0.1;
+
+    this.fall=true;
+}
+
+Rect.prototype={
+    draw:function(){
+arrow();
+    },
+    move:function(){
+this.l+=this.dl;
+this.o+=this.do;
+    },
+    grav:function(){
+        if(!this.fall) return;
+        this.do+=this.do+=this.max?this.dd:0;
+        if(this.o+this.j>=height){
+            this.o=height-this.h;
+            this.do=0;
+        }
+
+        if(Math.abs(this.dy)<this.dd-2&&this.o+this.j>=hero_atack_right){
+this.fall=false;
+this.do=0;
+        }
+    }
+}
 
 const placeCharacter=()=>{
     let pixelSize=parseInt(
@@ -85,10 +124,14 @@ document.addEventListener("keyup",(e)=>{
 function walk_left() {
             context.clearRect(0, 0, width, height);
             drawImage(hero_left, 0, 30);
+            HP();
+            Stamina();
 }
 function walk_right() {
         context.clearRect(0, 0, width, height);
         drawImage(hero_right, 0, 30); 
+        HP();
+        Stamina();
 } 
 
  function atack_right() { 
@@ -98,11 +141,13 @@ function walk_right() {
 context.clearRect(0, 0, width, height);
 drawImage(hero_atack_right, 0, 30); 
 if(i=9){
-arrow();
+Rect.push(new Rect)
 }
      }, 500);
  }
 }
+
+
 function atack_left() { 
     context.clearRect(0, 0, width, height);
    drawImage(hero_atack_left, 0, 30);
@@ -114,16 +159,22 @@ function atack_left() {
         arrow_img.style.display='block'
         arrow_img.style.transform= character.style.transform;
         arrow_img.style.top=490+"px";
-        function circ(timeFraction) {
-            return 1 - Math.sin(Math.acos(timeFraction));
-          }
-          circ();
        }
       
    setTimeout(function(){
     arrow_img.style.display='none'
    },1200);
+ 
    }
+ 
+ 
+   function HP(){
+    health.style.transform= character.style.transform;
+   }
+   function Stamina(){
+    stamina.style.transform= character.style.transform;
+   }
+
 let context = document.querySelector(".character").getContext("2d");
 
 let width = 100,
