@@ -48,9 +48,16 @@ body{
     background-size: contain;
     background-repeat: no-repeat;
     width: 100px;
+    display: block;
     height: 50px;
     position: absolute;
     border: 10px solid green;;
+}
+.fly{
+    animation: star 5s linear infinite;
+}
+@keyframes star{
+
 }
 .mob{
     top: 440px;
