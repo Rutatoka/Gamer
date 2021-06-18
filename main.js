@@ -94,11 +94,10 @@ function walk_right() {
  function atack_right() { 
      for(let i=0;i<14;i++){
 
-    
      setTimeout(() => {
-          context.clearRect(0, 0, width, height);
+context.clearRect(0, 0, width, height);
 drawImage(hero_atack_right, 0, 30); 
-if(i=6){
+if(i=9){
 arrow();
 }
      }, 500);
@@ -111,12 +110,19 @@ function atack_left() {
    }
 
    function arrow() { 
-       if(arrow_img.classList!='fly'){
-        arrow_img.classList.add('fly');
+       if(  arrow_img.style.display!='block'){
+        arrow_img.style.display='block'
+        arrow_img.style.transform= character.style.transform;
+        arrow_img.style.top=490+"px";
+        function circ(timeFraction) {
+            return 1 - Math.sin(Math.acos(timeFraction));
+          }
+          circ();
        }
+      
    setTimeout(function(){
-    arrow_img.classList.remove('fly');
-   },200);
+    arrow_img.style.display='none'
+   },1200);
    }
 let context = document.querySelector(".character").getContext("2d");
 
