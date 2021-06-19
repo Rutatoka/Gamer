@@ -14,6 +14,7 @@
 }
 body{
     margin: 0;
+    font-family: 'Courier New', Courier, monospace;
     padding: 0;
 }
 .pixel-art{
@@ -47,20 +48,66 @@ body{
     background-size: contain;
     background-repeat: no-repeat;
     width: 100px;
-    display: block;
+    display: none;
     height: 50px;
     position: absolute;
-    border: 10px solid greenyellow;;
+    /* border: 10px solid greenyellow;; */
 }
+/* .support{
+    width: 20px;
+    line-height: 20px; 
+} */
+.help{
+    position: relative;
+    z-index: 100;
+    display: none;
+    background: rgb(218, 134, 65);
+    box-shadow: inset 1px 2px 5px black;
+    width: 50px;
+    line-height: 20px;
+    text-align: center;
+    color: white;
+    box-sizing: border-box;
+    cursor: pointer;
+    background-image: url(img/help.png);
+}
+.helper{
+    position: absolute;
+    width: 400px;
+    background: rgb(218, 134, 65);
+    border-radius: 5px;
+    padding: 30px 20px 20px;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    display: block;
+box-shadow: inset 1px 2px 15px black;
+}
+    
+button{
+    width: 100px;
+    height: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 5px;
+    background: lightskyblue;
+}
+ul{
+    padding: 0;
+}
+     li{
+         list-style-type: none;
+         padding: 5px;
+     } 
 .arrow .left{
     background-image: url(img/arrow.png);
     background-size: contain;
     background-repeat: no-repeat;
     width: 100px;
-    display: block;
+    display: none;
+
     height: 50px;
     position: absolute;
-    border: 10px solid greenyellow;;
+    /* border: 10px solid greenyellow;; */
     transform: rotate(180deg);
   
 }
@@ -91,6 +138,8 @@ text-align: center;
     top: 440px;
     position: absolute;
     overflow: hidden;
+    width:100px;
+     height:200px;
    border: 9px solid red;  
 /* animation: mob 7s cubic-bezier(0.9, 0.1, 0.565, 1) infinite;  */
    right: 10px;
