@@ -2,52 +2,20 @@
 let character=document.querySelector(".character");
 let map=document.querySelector(".map");
 let health=document.querySelector("#health");
+let help=document.querySelector(".help");
+let helper=document.querySelector(".helper");
 let stamina=document.querySelector("#stamina");
  let mob=document.querySelector(".mob");
  let arrow_img=document.querySelector(".arrow");
-let x=40;
+let x=0;
 let y=0;
 let c=0;
 let v=0;
 let held_directions=[];
 let speed=7.8;
-// let Rect=function(l,o,k,j){
-//     this.l=l;
-//     this.o=o;
-//     this.k=k;
-//     this.j=j;
 
-//     this.dl=0;
-//     this.do=0;
 
-//     this.max=10;
-//     this.dd=0.1;
-
-//     this.fall=true;
-// }
-
-// Rect.prototype={
-//     draw:function(){
-// arrow();
-//     },
-//     move:function(){
-// this.l+=this.dl;
-// this.o+=this.do;
-//     },
-//     grav:function(){
-//         if(!this.fall) return;
-//         this.do+=this.do+=this.max?this.dd:0;
-//         if(this.o+this.j>=height){
-//             this.o=height-this.h;
-//             this.do=0;
-//         }
-
-//         if(Math.abs(this.dy)<this.dd-2&&this.o+this.j>=hero_atack_right){
-// this.fall=false;
-// this.do=0;
-//         }
-//     }
-// }
+ 
 
 const placeCharacter=()=>{
     let pixelSize=parseInt(
@@ -55,8 +23,8 @@ const placeCharacter=()=>{
     );
     const held_direction=held_directions[0];
     if(held_direction){
-        if(held_direction===directions.right){x+=speed; walk_right();}
-        if(held_direction===directions.left){x-=speed;walk_left(); }
+        if(held_direction===directions.right){x+=speed; walk_right(); if(stamina.value<100) {stamina.value++;}}
+        if(held_direction===directions.left){x-=speed;walk_left();  if(stamina.value<100) {stamina.value++;}}
         if(held_direction===directions.atack1){atack_left()}
         if(held_direction===directions.atack2){atack_right()}
         character.setAttribute("facing",held_direction);
@@ -64,14 +32,17 @@ const placeCharacter=()=>{
     }
 
     character.setAttribute("walking",held_direction?"true":"false");
-
    if(x>900||x<-2){ 
         character.style.transform=false
-       }
+      }
        else{  
            character.style.transform=`translate3d(${x*pixelSize}px,${y*pixelSize}px,0)`;
           
        }
+   
+
+
+      
     
    if(x>710||x<-2){
     map.style.transform=false
@@ -81,8 +52,8 @@ const placeCharacter=()=>{
     map.style.transform=`translate3d(${-x*pixelSize/1.2+camera_left}px,${-y*pixelSize}px,0)`;
    }
    
-}
 
+}
 
 const step=()=>{
     placeCharacter();
@@ -129,12 +100,14 @@ function walk_left() {
             drawImage(hero_left, 0, 30);
             HP();
             Stamina();
+            helps();
 }
 function walk_right() {
         context.clearRect(0, 0, width, height);
         drawImage(hero_right, 0, 30); 
         HP();
         Stamina();
+         helps();
 } 
 
  function atack_right() { 
@@ -169,6 +142,16 @@ function atack_left() {
         arrow_img.style.transform= character.style.transform;
         arrow_img.style.top=490+"px";
         arrow_img.classList.remove('left')
+        setTimeout(function(){
+            if(stamina.value<10){
+            stamina.style.background="red"
+            arrow1()=false
+            }
+            else{
+                stamina.value--;
+                stamina.style.background="blue"
+            }
+              },600)
        }
 
    setTimeout(function(){
@@ -176,6 +159,8 @@ function atack_left() {
    },800);
 
    }
+
+   
    function arrow2() { 
     if(  arrow_img.style.display!='block'){
      myMove2();
@@ -183,6 +168,16 @@ function atack_left() {
      arrow_img.style.transform= character.style.transform;
      arrow_img.style.top=490+"px";
      arrow_img.classList.add('left')
+     setTimeout(function(){
+        if(stamina.value<10){
+        stamina.style.background="red"
+        arrow2()=false
+        }
+        else{
+            stamina.value--;
+            stamina.style.background="blue"
+        }
+          },600)
     }
    
 setTimeout(function(){
@@ -233,32 +228,50 @@ setTimeout(function(){
    function HP(){
     health.style.transform= character.style.transform;
    }
+   function helps(){
+  help.style.transform= character.style.transform;
+  helper.style.transform= character.style.transform;
+  }
+
+   function show(){
+  helper.style.display="block"
+  help.style.display="none"
+   }
+   function invis(){
+    helper.style.display="none"
+  help.style.display="block"
+}
+
+
+
+
    function Stamina(){
     stamina.style.transform= character.style.transform;
-   }
 
-   function mob_walk_left() {
-            context.clearRect(0, 0, width, height);
-           let elem= drawImage(mob_left, 0, 30);
-           let id = null;
+   }
+// setInterval(mob_walk_left,10)
+//    function mob_walk_left() {
+//             context.clearRect(0, 0, width, height);
+//            drawImage(mob_left, 0, 30);
+//            let id = null;
         
-           let posX = 0;
+//            let posX = 0;
         
-           clearInterval(id);
-           id = setInterval(frame, 9);
-           function frame() {
-             if (posX == 100) {
-               clearInterval(id);
-             } else {
-               posX++; 
+//            clearInterval(id);
+//            id = setInterval(frame, 9);
+//            function frame() {
+//              if (posX == 100) {
+//                clearInterval(id);
+//              } else {
+//                posX++; 
            
        
          
-               elem.style.left = posX + "em"; 
-             }
-           }
+//                elem.style.left = posX + "em"; 
+//              }
+//            }
           
-}
+// }
 //  setInterval( function heroHart() {
 //     let id = null;
 //     const mob = document.querySelector(".mob") 
@@ -293,8 +306,18 @@ let width = 100,
 let hero_left = loadImage("img/hero_walk.png", 64, 160, 7);
 let hero_atack_right = loadImage("img/hero_atack.png", 65, 160, 13);
 let hero_atack_left = loadImage("img/hero_atack_left.png", 65, 160, 13);
-let mob_left = loadImage("img/mob_left.png", 66, 160, 7);
-let mob_right = loadImage("img/mob_right.png", 66, 160, 7);
+// setInterval(function(){
+//     let mob_left = loadImage("img/mob_left.png", 66, 160, 7);
+// mob_left = {
+//     x: 15,
+//     y: 15
+// }
+// mob_left.x = Math.floor(Math.random() * window.width/20)
+// },50)
+ 
+
+
+
 let hero_right = loadImage("img/hero_walk_right.png", 64, 160, 7);
 
 function drawImage(img, c, v) {
