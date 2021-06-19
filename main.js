@@ -11,43 +11,43 @@ let c=0;
 let v=0;
 let held_directions=[];
 let speed=7.8;
-let Rect=function(l,o,k,j){
-    this.l=l;
-    this.o=o;
-    this.k=k;
-    this.j=j;
+// let Rect=function(l,o,k,j){
+//     this.l=l;
+//     this.o=o;
+//     this.k=k;
+//     this.j=j;
 
-    this.dl=0;
-    this.do=0;
+//     this.dl=0;
+//     this.do=0;
 
-    this.max=10;
-    this.dd=0.1;
+//     this.max=10;
+//     this.dd=0.1;
 
-    this.fall=true;
-}
+//     this.fall=true;
+// }
 
-Rect.prototype={
-    draw:function(){
-arrow();
-    },
-    move:function(){
-this.l+=this.dl;
-this.o+=this.do;
-    },
-    grav:function(){
-        if(!this.fall) return;
-        this.do+=this.do+=this.max?this.dd:0;
-        if(this.o+this.j>=height){
-            this.o=height-this.h;
-            this.do=0;
-        }
+// Rect.prototype={
+//     draw:function(){
+// arrow();
+//     },
+//     move:function(){
+// this.l+=this.dl;
+// this.o+=this.do;
+//     },
+//     grav:function(){
+//         if(!this.fall) return;
+//         this.do+=this.do+=this.max?this.dd:0;
+//         if(this.o+this.j>=height){
+//             this.o=height-this.h;
+//             this.do=0;
+//         }
 
-        if(Math.abs(this.dy)<this.dd-2&&this.o+this.j>=hero_atack_right){
-this.fall=false;
-this.do=0;
-        }
-    }
-}
+//         if(Math.abs(this.dy)<this.dd-2&&this.o+this.j>=hero_atack_right){
+// this.fall=false;
+// this.do=0;
+//         }
+//     }
+// }
 
 const placeCharacter=()=>{
     let pixelSize=parseInt(
@@ -64,13 +64,14 @@ const placeCharacter=()=>{
     }
 
     character.setAttribute("walking",held_direction?"true":"false");
+
    if(x>900||x<-2){ 
         character.style.transform=false
        }
        else{  
            character.style.transform=`translate3d(${x*pixelSize}px,${y*pixelSize}px,0)`;
        }
-      
+    
    if(x>710||x<-2){
     map.style.transform=false
    }
@@ -78,6 +79,7 @@ const placeCharacter=()=>{
          let camera_left=pixelSize*1;
     map.style.transform=`translate3d(${-x*pixelSize/1.2+camera_left}px,${-y*pixelSize}px,0)`;
    }
+   
 }
 
 
@@ -140,40 +142,112 @@ function walk_right() {
      setTimeout(() => {
 context.clearRect(0, 0, width, height);
 drawImage(hero_atack_right, 0, 30); 
-if(i=9){
-Rect.push(new Rect)
-}
-     }, 500);
- }
+arrow1();
+ },70)
+     }
 }
 
 
 function atack_left() { 
-    context.clearRect(0, 0, width, height);
-   drawImage(hero_atack_left, 0, 30);
+ 
+    for(let i=0;i<14;i++){
+
+        setTimeout(() => {
+   context.clearRect(0, 0, width, height);
+   drawImage(hero_atack_left, 0, 30); 
+   arrow2();
+    },70)
+        }
    
    }
 
-   function arrow() { 
+   function arrow1() { 
        if(  arrow_img.style.display!='block'){
+        myMove();
         arrow_img.style.display='block'
         arrow_img.style.transform= character.style.transform;
         arrow_img.style.top=490+"px";
+        arrow_img.classList.remove('left')
        }
       
    setTimeout(function(){
     arrow_img.style.display='none'
-   },1200);
+  
+
+   },800);
  
    }
- 
- 
+   function arrow2() { 
+    if(  arrow_img.style.display!='block'){
+     myMove2();
+     arrow_img.style.display='block'
+     arrow_img.style.transform= character.style.transform;
+     arrow_img.style.top=490+"px";
+     arrow_img.classList.add('left')
+    }
+   
+setTimeout(function(){
+ arrow_img.style.display='none'
+},800);
+
+}
+   function myMove() {
+    let id = null;
+    const elem = document.querySelector(".arrow") 
+    let posX = 0;
+    let posY=490;
+    clearInterval(id);
+    id = setInterval(frame, 9);
+    function frame() {
+      if (posX == 100) {
+        clearInterval(id);
+      } else {
+        posX++; 
+        posY++; 
+
+        elem.style.top = posY + "px"; 
+        elem.style.left = posX + "em"; 
+      }
+    }
+  }
+  function myMove2() {
+    let id = null;
+    const elem = document.querySelector(".arrow") 
+    let posX = 0;
+    let posY=490;
+    clearInterval(id);
+    id = setInterval(frame, 9);
+    function frame() {
+      if (posX == -100) {
+        clearInterval(id);
+      } else {
+        posX--; 
+        posY++; 
+
+        elem.style.top = posY + "px"; 
+        elem.style.left = posX + "em"; 
+      }
+    }
+  }
    function HP(){
     health.style.transform= character.style.transform;
    }
    function Stamina(){
     stamina.style.transform= character.style.transform;
    }
+
+
+   let Hero_hart = setInterval( function (){
+    //    let heroRight=parseInt(window,getComputedStyle(character).getPropertyValue('transform'));
+    //    let mobleft=parseInt(window,getComputedStyle(mob).getPropertyValue('right'));
+  
+  if(mob.style.right=character.style.transform){
+      console.log(mob.style.right);
+   }
+   else{
+    mob.style.right++;
+ }
+},1000)
 
 let context = document.querySelector(".character").getContext("2d");
 
