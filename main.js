@@ -56,7 +56,7 @@ const placeCharacter=()=>{
     const held_direction=held_directions[0];
     if(held_direction){
         if(held_direction===directions.right){x+=speed; walk_right();}
-        if(held_direction===directions.left){x-=speed;walk_left();}
+        if(held_direction===directions.left){x-=speed;walk_left(); }
         if(held_direction===directions.atack1){atack_left()}
         if(held_direction===directions.atack2){atack_right()}
         character.setAttribute("facing",held_direction);
@@ -70,6 +70,7 @@ const placeCharacter=()=>{
        }
        else{  
            character.style.transform=`translate3d(${x*pixelSize}px,${y*pixelSize}px,0)`;
+          
        }
     
    if(x>710||x<-2){
@@ -169,13 +170,11 @@ function atack_left() {
         arrow_img.style.top=490+"px";
         arrow_img.classList.remove('left')
        }
-      
+
    setTimeout(function(){
     arrow_img.style.display='none'
-  
-
    },800);
- 
+
    }
    function arrow2() { 
     if(  arrow_img.style.display!='block'){
@@ -229,6 +228,8 @@ setTimeout(function(){
       }
     }
   }
+
+
    function HP(){
     health.style.transform= character.style.transform;
    }
@@ -236,18 +237,53 @@ setTimeout(function(){
     stamina.style.transform= character.style.transform;
    }
 
+   function mob_walk_left() {
+            context.clearRect(0, 0, width, height);
+           let elem= drawImage(mob_left, 0, 30);
+           let id = null;
+        
+           let posX = 0;
+        
+           clearInterval(id);
+           id = setInterval(frame, 9);
+           function frame() {
+             if (posX == 100) {
+               clearInterval(id);
+             } else {
+               posX++; 
+           
+       
+         
+               elem.style.left = posX + "em"; 
+             }
+           }
+          
+}
+//  setInterval( function heroHart() {
+//     let id = null;
+//     const mob = document.querySelector(".mob") 
+//     let posX = 0;
+//     // let posY=490;
+//     // clearInterval(id);
+//     id = setInterval(frame,11);
+//     function frame() {
+//       if (posX > 3000) {
+//         clearInterval(id);
+//       } else {
+//         posX++; 
+//         // posY++; 
 
-   let Hero_hart = setInterval( function (){
-    //    let heroRight=parseInt(window,getComputedStyle(character).getPropertyValue('transform'));
-    //    let mobleft=parseInt(window,getComputedStyle(mob).getPropertyValue('right'));
-  
-  if(mob.style.right=character.style.transform){
-      console.log(mob.style.right);
-   }
-   else{
-    mob.style.right++;
- }
-},1000)
+//         // elem.style.top = posY + "px"; 
+//         mob.style.left = posX + "px"; 
+//       }
+//     }
+//  },9000)
+//  setInterval(function(){
+//      if( mob.style.left=x){
+// console.log('jj')
+// }
+//  },10)
+
 
 let context = document.querySelector(".character").getContext("2d");
 
@@ -257,8 +293,8 @@ let width = 100,
 let hero_left = loadImage("img/hero_walk.png", 64, 160, 7);
 let hero_atack_right = loadImage("img/hero_atack.png", 65, 160, 13);
 let hero_atack_left = loadImage("img/hero_atack_left.png", 65, 160, 13);
-// let mob_left = loadImage("img/mob_left.png", 66, 160, 7);
-// let mob_right = loadImage("img/mob_right.png", 66, 160, 7);
+let mob_left = loadImage("img/mob_left.png", 66, 160, 7);
+let mob_right = loadImage("img/mob_right.png", 66, 160, 7);
 let hero_right = loadImage("img/hero_walk_right.png", 64, 160, 7);
 
 function drawImage(img, c, v) {
